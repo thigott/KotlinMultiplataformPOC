@@ -16,7 +16,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "KotlinMultiplataformPOC"
 include(":androidApp")
-include(":shared")
 include(":uikit")
 include(":features:home")
 include(":navigation")
