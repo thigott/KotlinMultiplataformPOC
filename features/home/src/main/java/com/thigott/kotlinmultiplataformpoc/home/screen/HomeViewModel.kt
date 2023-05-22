@@ -4,31 +4,50 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import com.thigott.kotlinmultiplataformlibrary.domain.usecases.GetKtorTestUseCase
+import com.thigott.kotlinmultiplataformlibrary.domain.usecases.LoginUseCase
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class HomeViewModel: ViewModel(), KoinComponent {
 
-    private val getKtorTestUseCase by inject<GetKtorTestUseCase>()
+    private val loginUseCase by inject<LoginUseCase>()
     var viewState by mutableStateOf(HomeViewState())
         private set
 
-    init {
-        getKtor()
+
+    fun updateUsernameValue(username: String) {
+        viewState = viewState.copy(
+            username = username
+        )
     }
 
-    private fun getKtor() {
-        viewState = viewState.copy(isLoading = true)
-        getKtorTestUseCase(
+    fun updatePasswordValue(password: String) {
+        viewState = viewState.copy(
+            password = password
+        )
+    }
+
+    fun login() {
+        viewState = viewState.copy(
+            isLoading = true
+        )
+
+        loginUseCase(
+            params = LoginUseCase.Params(
+                username = viewState.username,
+                password = viewState.password
+            ),
             onSuccess = {
                 viewState = viewState.copy(
                     isLoading = false,
-                    requestData = it
+                    success = it.accessToken
                 )
             },
             onError = {
-                viewState = viewState.copy(isLoading = false)
+                viewState = viewState.copy(
+                    isLoading = false,
+                    error = it.message ?: ""
+                )
             }
         )
     }
