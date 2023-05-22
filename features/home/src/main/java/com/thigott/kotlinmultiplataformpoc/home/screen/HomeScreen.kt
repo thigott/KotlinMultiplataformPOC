@@ -1,6 +1,5 @@
 package com.thigott.kotlinmultiplataformpoc.home.screen
 
-import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,7 +15,6 @@ import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -28,14 +26,6 @@ fun HomeScreen(
     viewModel: HomeViewModel = getViewModel()
 ) {
     val viewState = viewModel.viewState
-
-    if (viewState.success.isNotEmpty()) {
-        Toast.makeText(LocalContext.current, viewState.success, Toast.LENGTH_SHORT).show()
-    }
-
-    if (viewState.error.isNotEmpty()) {
-        Toast.makeText(LocalContext.current, viewState.error, Toast.LENGTH_SHORT).show()
-    }
 
     Scaffold {
         Box(
