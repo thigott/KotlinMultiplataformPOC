@@ -14,20 +14,29 @@ class HomeViewModel: ViewModel(), KoinComponent {
     var viewState by mutableStateOf(HomeViewState())
         private set
 
+    fun dispatchViewAction(viewAction: HomeViewAction) {
+        when (viewAction) {
+            is HomeViewAction.UpdateUsername -> updateUsernameValue(username = viewAction.username)
+            is HomeViewAction.UpdatePassword -> updatePasswordValue(password = viewAction.password)
+            is HomeViewAction.Login -> login()
+        }
+    }
 
-    fun updateUsernameValue(username: String) {
+    private fun updateUsernameValue(username: String) {
         viewState = viewState.copy(
-            username = username
+            username = username,
+            error = ""
         )
     }
 
-    fun updatePasswordValue(password: String) {
+    private fun updatePasswordValue(password: String) {
         viewState = viewState.copy(
-            password = password
+            password = password,
+            error = ""
         )
     }
 
-    fun login() {
+    private fun login() {
         viewState = viewState.copy(
             isLoading = true
         )

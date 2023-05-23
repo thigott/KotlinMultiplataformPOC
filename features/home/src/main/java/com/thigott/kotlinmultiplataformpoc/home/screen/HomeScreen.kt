@@ -15,10 +15,14 @@ import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.thigott.kotlinmultiplataformpoc.home.R
+import com.thigott.kotlinmultiplataformpoc.home.screen.HomeViewAction.Login
+import com.thigott.kotlinmultiplataformpoc.home.screen.HomeViewAction.UpdatePassword
+import com.thigott.kotlinmultiplataformpoc.home.screen.HomeViewAction.UpdateUsername
 import org.koin.androidx.compose.getViewModel
 
 @Composable
@@ -35,9 +39,8 @@ fun HomeScreen(
                 isLoading = viewState.isLoading,
                 username = viewState.username,
                 password = viewState.password,
-                onUsernameChange = viewModel::updateUsernameValue,
-                onPasswordChange = viewModel::updatePasswordValue,
-                onButtonClicked = viewModel::login
+                error = viewState.error,
+                viewAction = viewModel::dispatchViewAction
             )
         }
     }
@@ -48,9 +51,8 @@ private fun HomeContent(
     isLoading: Boolean = false,
     username: String = "",
     password: String = "",
-    onUsernameChange: (String) -> Unit = {},
-    onPasswordChange: (String) -> Unit = {},
-    onButtonClicked: () -> Unit = {}
+    error: String = "",
+    viewAction: (HomeViewAction) -> Unit = {},
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -59,20 +61,26 @@ private fun HomeContent(
     ) {
         HomeInputData(
             value = username,
-            onValueChange = onUsernameChange,
+            onValueChange = { viewAction(UpdateUsername(it)) },
             hint = stringResource(R.string.username_hint)
         )
         Spacer(modifier = Modifier.height(8.dp))
         HomeInputData(
             value = password,
-            onValueChange = onPasswordChange,
+            onValueChange = { viewAction(UpdatePassword(it)) },
             hint = stringResource(R.string.password_hint)
         )
         Spacer(modifier = Modifier.height(16.dp))
         if (isLoading) {
             CircularProgressIndicator()
         } else {
-            Button(onClick = onButtonClicked) {
+            if (error.isNotEmpty()) {
+                Text(
+                    text = error,
+                    color = Color.Red
+                )
+            }
+            Button(onClick = { viewAction(Login) }) {
                 Text(
                     modifier = Modifier.padding(horizontal = 32.dp),
                     text = stringResource(R.string.login)
