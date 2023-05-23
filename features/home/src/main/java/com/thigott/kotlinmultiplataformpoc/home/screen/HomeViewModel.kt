@@ -25,14 +25,16 @@ class HomeViewModel: ViewModel(), KoinComponent {
     private fun updateUsernameValue(username: String) {
         viewState = viewState.copy(
             username = username,
-            error = ""
+            error = "",
+            success = ""
         )
     }
 
     private fun updatePasswordValue(password: String) {
         viewState = viewState.copy(
             password = password,
-            error = ""
+            error = "",
+            success = ""
         )
     }
 

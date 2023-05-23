@@ -13,7 +13,7 @@ gson-version = "2.9.1"
 composeUiVersion = "1.4.0"
 composeActivityVersion = "1.7.0"
 koinVersion = "3.2.2"
-kmmLibraryVersion = "3.0.5"
+kmmLibraryVersion = "3.0.6"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
