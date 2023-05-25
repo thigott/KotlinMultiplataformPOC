@@ -6,6 +6,8 @@ import androidx.navigation.navigation
 import com.thigott.kotlinmultiplataformpoc.home.screen.HomeScreen
 import com.thigott.kotlinmultiplataformpoc.navigation.destination.core.Destination
 import com.thigott.kotlinmultiplataformpoc.navigation.destination.home.HomeRoutes
+import com.thigott.kotlinmultiplataformpoc.navigation.destination.profile.ProfileRoutes
+import com.thigott.kotlinmultiplataformpoc.profile.screen.ProfileScreen
 
 internal fun NavGraphBuilder.addHomeNavGraph() {
     navigation(
@@ -16,6 +18,13 @@ internal fun NavGraphBuilder.addHomeNavGraph() {
             route = HomeRoutes.Home.createRoute(),
             content = {
                 HomeScreen()
+            }
+        )
+
+        composable(
+            route = ProfileRoutes.Profile.createRoute(),
+            content = {
+                ProfileScreen()
             }
         )
     }

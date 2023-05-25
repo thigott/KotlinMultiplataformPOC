@@ -8,8 +8,9 @@ import com.thigott.kotlinmultiplataformlibrary.domain.usecases.LoginUseCase
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class HomeViewModel: ViewModel(), KoinComponent {
+class HomeViewModel : ViewModel(), KoinComponent {
 
+    private val homeNavigation by inject<HomeNavigation>()
     private val loginUseCase by inject<LoginUseCase>()
     var viewState by mutableStateOf(HomeViewState())
         private set
@@ -19,6 +20,7 @@ class HomeViewModel: ViewModel(), KoinComponent {
             is HomeViewAction.UpdateUsername -> updateUsernameValue(username = viewAction.username)
             is HomeViewAction.UpdatePassword -> updatePasswordValue(password = viewAction.password)
             is HomeViewAction.Login -> login()
+            is HomeViewAction.Navigation.NavigateToProfile -> navigateToProfileScreen()
         }
     }
 
@@ -51,15 +53,23 @@ class HomeViewModel: ViewModel(), KoinComponent {
             onSuccess = {
                 viewState = viewState.copy(
                     isLoading = false,
-                    success = it.accessToken
+                    success = it.accessToken,
+                    error = ""
                 )
+
+                dispatchViewAction(HomeViewAction.Navigation.NavigateToProfile)
             },
             onError = {
                 viewState = viewState.copy(
                     isLoading = false,
-                    error = it.message ?: ""
+                    error = it.message ?: "",
+                    success = ""
                 )
             }
         )
+    }
+
+    private fun navigateToProfileScreen() {
+        homeNavigation.goToProfileScreen()
     }
 }

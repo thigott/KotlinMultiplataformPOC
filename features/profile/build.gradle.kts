@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.thigott.kotlinmultiplataformpoc.navigation"
+    namespace = "com.thigott.kotlinmultiplataformpoc.profile"
     compileSdk = 33
 
     defaultConfig {
@@ -39,15 +39,15 @@ android {
 }
 
 dependencies {
-    api(project(path = ":features:home"))
-    api(project(path = ":features:profile"))
+    implementation(libs.kmmLibrary)
 
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
     implementation(libs.material)
-    implementation(libs.composeNavigation)
-    implementation(libs.gson)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
+
+    implementation(libs.bundles.compose)
+    implementation(libs.bundles.koin)
 }
