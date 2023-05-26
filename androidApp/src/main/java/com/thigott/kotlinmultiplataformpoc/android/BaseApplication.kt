@@ -5,6 +5,7 @@ import com.thigott.kotlinmultiplataformlibrary.di.dataModule
 import com.thigott.kotlinmultiplataformlibrary.di.domainModule
 import com.thigott.kotlinmultiplataformpoc.di.navigationModule
 import com.thigott.kotlinmultiplataformpoc.di.presentationModule
+import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.GlobalContext.startKoin
 
 class BaseApplication: Application() {
@@ -17,9 +18,9 @@ class BaseApplication: Application() {
                     domainModule,
                     navigationModule,
                     presentationModule,
-                    dataModule
+                    dataModule,
                 )
             )
-        }
+        }.androidContext(applicationContext)
     }
 }
